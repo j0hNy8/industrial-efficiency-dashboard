@@ -1,0 +1,4 @@
+Timestamp,Machine_ID,Parts_Produced,Scrap_Count
+2025-11-30 08:00:00,PRESS_01,58,5
+2025-11-30 08:00:00,CNC_02,128,5
+2025-11-30 08:00:00,WELD_03,104,10
