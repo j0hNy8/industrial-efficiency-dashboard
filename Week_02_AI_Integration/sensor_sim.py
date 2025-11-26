@@ -2,7 +2,7 @@ import time
 import random
 import pandas as pd
 from sqlalchemy import create_engine
-from datetime import datetime
+from datetime import datetime, timedelta
 
 # 1. CONNECT to a local database file
 # If 'factory.db' doesn't exist, this will create it automatically.
@@ -15,7 +15,10 @@ machines = ['PRESS_01', 'CNC_02', 'WELD_03', 'ASSEMBLY_04']
 
 while True:
     # 2. GENERATE random sensor data
-    current_time = datetime.now().strftime('%Y-%m-%d %H:%M:%S')
+    # Force time to match Slovakia (UTC + 1 hour)
+    # Note: Docker's 'now' is UTC. So we take 'now' and add 1 hour.
+    slovak_time = datetime.now() + timedelta(hours=1) 
+    current_time = slovak_time.strftime('%Y-%m-%d %H:%M:%S')
     machine = random.choice(machines)
     
     # Simulate: 90% chance of 'RUN', 10% chance of 'STOP'
