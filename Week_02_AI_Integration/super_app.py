@@ -57,7 +57,7 @@ def get_ai_response(user_query, manual_text):
     """
     
     response = client.chat.completions.create(
-        model="gpt-5",
+        model="gpt-5.1", # <--- NEW
         messages=[{"role": "user", "content": prompt}]
     )
     
