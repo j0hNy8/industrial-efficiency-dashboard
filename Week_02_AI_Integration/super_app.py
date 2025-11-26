@@ -5,6 +5,7 @@ from dotenv import load_dotenv
 from openai import OpenAI
 import numpy as np
 from sklearn.metrics.pairwise import cosine_similarity
+import matplotlib.pyplot as plt
 
 # --- 1. SETUP & CONFIG ---
 st.set_page_config(layout="wide", page_title="Industrial AI Cockpit")
@@ -60,7 +61,7 @@ def get_ai_response(user_query, manual_text):
     return response.choices[0].message.content, best_chunk
 
 # --- 3. THE USER INTERFACE ---
-st.title("🏭 AI-Powered Plant Manager")
+st.title("🏭 AI-Powered Industrial Analytics")
 
 # Create two columns: Left for Data, Right for Chat
 col1, col2 = st.columns([2, 1]) 
@@ -81,14 +82,28 @@ with col1:
         total_parts = df['Parts_Produced'].sum()
         # Handle cases where 'Scrap' column might not exist in older CSVs
         total_scrap = df['Scrap_Count'].sum() if 'Scrap_Count' in df.columns else 0
-        
+        scrap_rate = (total_scrap / total_parts * 100) if total_parts > 0 else 0
+
         kpi1.metric("Total Output", f"{total_parts} units")
         kpi2.metric("Total Scrap", f"{total_scrap} units")
-        kpi3.metric("Efficiency", "94%") # Placeholder
+        kpi3.metric("Scrap Rate", f"{scrap_rate:.2f}%")
         
         # Charts
         st.subheader("Production by Machine")
-        st.bar_chart(df.groupby("Machine_ID")["Parts_Produced"].sum())
+
+        # Create a custom chart figure
+        fig, ax = plt.subplots()
+
+        # Plot the data with a specific color (Hex code for Orange is #FFA500)
+        # You can also use 'red', 'green', 'purple', etc.
+        df.groupby("Machine_ID")["Parts_Produced"].sum().plot(kind='bar', ax=ax, color='#FFA500')
+
+        # Add labels to make it professional
+        plt.ylabel("Total Output")
+        plt.title("Production Volume per Machine")
+
+        # Display it in Streamlit
+        st.pyplot(fig)
         
         # Raw Data Expander
         with st.expander("View Raw Logs"):
