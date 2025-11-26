@@ -1,0 +1,26 @@
+[
+  {
+    "sensor_id": "SENS_01",
+    "location": "Boiler Room",
+    "timestamp": "2025-11-25T08:00:00Z",
+    "status": "active",
+    "metrics": {
+      "temperature_c": 85.5,
+      "pressure_psi": 120,
+      "vibration_hz": 0.5
+    },
+    "alerts": []
+  },
+  {
+    "sensor_id": "SENS_02",
+    "location": "Cooling Tower",
+    "timestamp": "2025-11-25T08:05:00Z",
+    "status": "warning",
+    "metrics": {
+      "temperature_c": 92.1,
+      "pressure_psi": 118,
+      "vibration_hz": 3.2
+    },
+    "alerts": ["High Vibration", "Check Mount"]
+  }
+]

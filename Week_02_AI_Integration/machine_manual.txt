@@ -1,0 +1,19 @@
+SECTION 1: SAFETY
+- Always wear PPE (Personal Protective Equipment) including safety glasses and steel-toe boots.
+- Lock-out/Tag-out (LOTO) procedures must be followed before opening any panel.
+- Emergency Stop buttons are located on the main control panel and the rear maintenance door.
+
+SECTION 2: HYDRAULIC SYSTEM
+- The hydraulic pump operates at 120 PSI.
+- If pressure drops below 100 PSI, check the relief valve on the manifold block.
+- Fluid type: ISO VG 46 only. Change filter every 2000 hours.
+
+SECTION 3: ELECTRICAL FAULTS
+- Error E-404: Spindle Overload. Causes: Dull tool, excessive feed rate, or spindle bearing failure.
+- Action for E-404: Reduce feed rate by 50%. If persists, check spindle amp draw.
+- Error E-500: Communication Loss. Check the Ethernet cable between the HMI and the PLC.
+
+SECTION 4: MAINTENANCE SCHEDULE
+- Daily: Check coolant levels and way lube.
+- Weekly: Clean chip conveyor and inspect spindle taper.
+- Yearly: Replace backup battery in the servo drives.

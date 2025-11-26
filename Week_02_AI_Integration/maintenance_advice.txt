@@ -1,0 +1,7 @@
+Assessment:
+- Vibration 4.5 mm/s is high (likely imbalance/chatter or spindle/bearing issue). Temperature normal. E-404 “Spindle overload” aligns with excessive cutting load or mechanical drag. Last maintenance 6 months ago—wear possible.
+
+Immediate actions:
+1) Controlled stop and isolate cause: Clear alarm, run spindle no-load at low RPM (500–1000). Monitor vibration and spindle current. If >3 mm/s or overload occurs with no cut, tag-out and schedule spindle/bearing/drive inspection.
+2) Fix likely external causes: Replace/dress tool/insert, check holder balance/runout, verify offsets; reduce feed/speed and depth of cut by 20–30%. Test cut while keeping spindle load <80%.
+3) Secure mechanics and support: Re-torque chuck/jaws/tailstock, verify part overhang; clear chips; check spindle lube pressure/flow and listen for bearing noise; inspect belt/coupling for slip. If any anomaly found, keep machine out of service and escalate.
