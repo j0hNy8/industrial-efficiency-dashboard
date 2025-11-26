@@ -7,6 +7,8 @@ import numpy as np
 from sklearn.metrics.pairwise import cosine_similarity
 import matplotlib.pyplot as plt
 
+from pypdf import PdfReader
+
 from fpdf import FPDF
 import base64
 
