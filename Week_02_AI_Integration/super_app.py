@@ -101,10 +101,14 @@ with col2:
     st.header("🤖 AI Technician")
     st.markdown("*Ask questions about maintenance protocols.*")
     
+    # --- PATH FIX: Get the folder where THIS script is located ---
+    current_dir = os.path.dirname(os.path.abspath(__file__))
+    manual_path = os.path.join(current_dir, "machine_manual.txt")
+
     # Check if manual exists
-    if os.path.exists("machine_manual.txt"):
+    if os.path.exists(manual_path):
         # Read the manual
-        with open("machine_manual.txt", "r") as f:
+        with open(manual_path, "r") as f:
             manual_text = f.read()
             
         # Chat Input
