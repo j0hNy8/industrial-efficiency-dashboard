@@ -17,35 +17,37 @@ def get_database_connection():
 
 db_engine = get_database_connection()
 
-# --- 2. PDF GENERATOR ---
+# --- 2. PDF GENERATOR (Cleaned for FPDF2 Warnings) ---
 def create_pdf(total_parts, scrap_rate, advice, timestamp):
     pdf = FPDF()
     pdf.add_page()
-    pdf.set_font("Arial", size=12)
+    # FIX 1: Use 'Helvetica' instead of 'Arial' to stop the warnings
+    pdf.set_font("Helvetica", size=12)
     
     # Header
-    pdf.set_font("Arial", 'B', 16)
+    pdf.set_font("Helvetica", 'B', 16)
     pdf.cell(200, 10, text="Official Shift Report", new_x="LMARGIN", new_y="NEXT", align='C')
-    pdf.set_font("Arial", size=10)
+    pdf.set_font("Helvetica", size=10)
     pdf.cell(200, 10, text=f"Generated: {timestamp}", new_x="LMARGIN", new_y="NEXT", align='C')
     
     # Metrics Section
     pdf.ln(10)
-    pdf.set_font("Arial", 'B', 14)
+    pdf.set_font("Helvetica", 'B', 14)
     pdf.cell(200, 10, text="Production Summary", new_x="LMARGIN", new_y="NEXT")
     
-    pdf.set_font("Arial", size=12)
+    pdf.set_font("Helvetica", size=12)
     pdf.cell(200, 10, text=f"Total Units Produced: {total_parts}", new_x="LMARGIN", new_y="NEXT")
     pdf.cell(200, 10, text=f"Scrap Rate: {scrap_rate:.2f}%", new_x="LMARGIN", new_y="NEXT")
     
     # AI/Notes Section
     pdf.ln(10)
-    pdf.set_font("Arial", 'B', 14)
-    pdf.cell(200, 10, text="Operational Notes / AI Diagnosis", new_x="LMARGIN", new_y="NEXT")
-    pdf.set_font("Arial", size=10)
+    pdf.set_font("Helvetica", 'B', 14)
+    pdf.cell(200, 10, text="Operational Notes", new_x="LMARGIN", new_y="NEXT")
+    pdf.set_font("Helvetica", size=10)
     pdf.multi_cell(0, 10, text=advice)
     
-    return pdf.output(dest="S")
+    # FIX 2: Remove 'dest="S"'. Calling .output() without args returns the bytes automatically.
+    return pdf.output()
 
 # --- 3. REPORT INTERFACE ---
 col1, col2 = st.columns([1, 2])
