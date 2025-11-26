@@ -51,7 +51,12 @@ while True:
 
     # B. Find the Best Match (Cosine Similarity)
     # Compare the question vector to all manual vectors
-    similarities = cosine_similarity([question_vector], chunk_embeddings)[0]
+    # Convert lists to Numpy Arrays explicitly
+    # .reshape(1, -1) ensures the question is a "Row", not a flat line.
+    q_array = np.array(question_vector).reshape(1, -1)
+    chunks_array = np.array(chunk_embeddings)
+
+    similarities = cosine_similarity(q_array, chunks_array)[0]
     
     # Get the index of the highest score
     best_index = np.argmax(similarities)
