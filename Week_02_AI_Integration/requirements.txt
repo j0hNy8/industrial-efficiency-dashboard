@@ -7,3 +7,4 @@ numpy
 openpyxl
 tabulate
 matplotlib
+fpdf2

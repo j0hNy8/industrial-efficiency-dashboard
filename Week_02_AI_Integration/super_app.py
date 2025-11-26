@@ -7,6 +7,9 @@ import numpy as np
 from sklearn.metrics.pairwise import cosine_similarity
 import matplotlib.pyplot as plt
 
+from fpdf import FPDF
+import base64
+
 # --- 1. SETUP & CONFIG ---
 st.set_page_config(layout="wide", page_title="Industrial AI Cockpit")
 load_dotenv()
@@ -60,6 +63,32 @@ def get_ai_response(user_query, manual_text):
     
     return response.choices[0].message.content, best_chunk
 
+
+def create_pdf(total_parts, scrap_rate, advice):
+    pdf = FPDF()
+    pdf.add_page()
+    pdf.set_font("Arial", size=12)
+    
+    # Title
+    pdf.set_font("Arial", 'B', 16)
+    # MODERN SYNTAX: 'text=' and 'new_y="NEXT"'
+    pdf.cell(200, 10, text="Shift Performance Report", new_x="LMARGIN", new_y="NEXT", align='C')
+    
+    # Metrics
+    pdf.set_font("Arial", size=12)
+    pdf.cell(200, 10, text=f"Total Production: {total_parts} units", new_x="LMARGIN", new_y="NEXT")
+    pdf.cell(200, 10, text=f"Scrap Rate: {scrap_rate:.2f}%", new_x="LMARGIN", new_y="NEXT")
+    
+    # AI Advice
+    pdf.ln(10) # Line break
+    pdf.set_font("Arial", 'B', 12)
+    pdf.cell(200, 10, text="AI Maintenance Recommendations:", new_x="LMARGIN", new_y="NEXT")
+    pdf.set_font("Arial", size=10)
+    pdf.multi_cell(0, 10, text=advice)
+    
+    # MODERN RETURN: Returns bytes directly, no .encode() needed
+    return pdf.output(dest="S")
+
 # --- 3. THE USER INTERFACE ---
 st.title("🏭 AI-Powered Industrial Analytics")
 
@@ -108,6 +137,24 @@ with col1:
         # Raw Data Expander
         with st.expander("View Raw Logs"):
             st.dataframe(df)
+
+        # === NEW PDF BUTTON HERE ===
+        st.divider() # Adds a nice line
+
+        # Generate PDF logic
+        if st.button("📄 Generate PDF Report"):
+            # Use dummy advice if they haven't asked the AI yet
+            ai_advice_text = "Standard operation. No critical faults detected."
+                    
+            # Generate the PDF
+            pdf_data = create_pdf(total_parts, scrap_rate, ai_advice_text)
+                    
+            # Create the download link (The "Magic" encoding)
+            b64 = base64.b64encode(pdf_data).decode()
+            href = f'<a href="data:application/octet-stream;base64,{b64}" download="shift_report.pdf" style="text-decoration:none; color:black; background-color:#FFA500; padding:10px; border-radius:5px;">Download PDF (Click Here)</a>'
+                    
+            # Show the link
+            st.markdown(href, unsafe_allow_html=True)
     else:
         st.info("👈 Upload a CSV file to see the dashboard.")
 
